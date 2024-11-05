@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Disasters Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        #question {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .choice {
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            width: 300px;
+            text-align: center;
+            font-size: 18px;
+        }
+        .choice:hover {
+            background-color: #2980b9;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #restart {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #2ecc71;
+            color: white;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            display: none;
+        }
+        #restart:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="question">What is one of the causes of natural disasters?</div>
+    <button class="choice" onclick="checkAnswer(1)">1. Pollution</button>
+    <button class="choice" onclick="checkAnswer(2)">2. Climate change</button>
+    <button class="choice" onclick="checkAnswer(3)">3. Overpopulation</button>
+
+    <div id="result"></div>
+    <button id="restart" onclick="restartGame()">Restart Game</button>
+
+    <script>
+        // Define the questions and answers
+        const questions = [
+            {
+                question: "What is one of the causes of natural disasters?",
+                choices: ["Pollution", "Climate change", "Overpopulation"],
+                correctAnswer: 2 // Index of the correct answer (Climate change)
+            },
+            {
+                question: "How can we prevent them?",
+                choices: ["Improving urban traffic", "Implementing early warning systems and disaster-resistant infrastructure", "Reducing plastic waste"],
+                correctAnswer: 2 // Index of the correct answer (Implementing early warning systems)
+            },
+            {
+                question: "Types of natural disasters?",
+                choices: ["Floods and Tsunamis", "Earthquakes and Hurricanes", "Volcanoes and Tornadoes"],
+                correctAnswer: 2 // Index of the correct answer (Earthquakes and Hurricanes)
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        // Show the first question
+        displayQuestion();
+
+        // Function to display a new question
+        function displayQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById('question').textContent = question.question;
+            const buttons = document.querySelectorAll('.choice');
+            buttons.forEach((button, index) => {
+                button.textContent = `${index + 1}. ${question.choices[index]}`;
+            });
+            document.getElementById('result').textContent = ''; // Clear previous result
+            document.getElementById('restart').style.display = 'none'; // Hide restart button
+        }
+
+        // Function to check the user's answer
+        function checkAnswer(answerIndex) {
+            const question = questions[currentQuestionIndex];
+            if (answerIndex === question.correctAnswer) {
+                document.getElementById('result').textContent = "Correct! 🎉";
+            } else {
+                document.getElementById('result').textContent = "Incorrect, try again.";
+            }
+
+            // Show the restart button only if the answer is correct
+            if (answerIndex === question.correctAnswer) {
+                setTimeout(() => {
+                    if (currentQuestionIndex < questions.length - 1) {
+                        currentQuestionIndex++;
+                        displayQuestion();
+                    } else {
+                        document.getElementById('result').textContent = "Congratulations! You've completed the quiz.";
+                        document.getElementById('restart').style.display = 'block';
+                    }
+                }, 1000); // Show next question after 1 second
+            }
+        }
+
+        // Function to restart the game
+        function restartGame() {
+            currentQuestionIndex = 0;
+            displayQuestion();
+        }
+    </script>
+
+</body>
+</html>
